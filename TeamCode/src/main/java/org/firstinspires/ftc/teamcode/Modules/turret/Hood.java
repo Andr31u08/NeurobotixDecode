@@ -1,0 +1,34 @@
+package org.firstinspires.ftc.teamcode.Modules.turret;
+
+import static org.firstinspires.ftc.teamcode.Robot.Hardware.unlock;
+
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.Wrappers.BetterMotor;
+import org.firstinspires.ftc.teamcode.Wrappers.BetterServo;
+
+public class Hood {
+
+    private final BetterServo hood;
+    private final Servo hoodServo;
+
+    // TODO:
+    private static double startPos = 0;
+
+    //TODO: derive the ecuation for the hood movement !!!
+    private static final double ecuation = 0;
+
+    public Hood (HardwareMap hardwareMap)
+    {
+        hoodServo = hardwareMap.get(Servo.class, "HoodServo");
+        hood = new BetterServo("HoodServo", hoodServo, BetterServo.RunMode.PROFILE, startPos, false);
+    }
+
+    public void updatePosition()
+    {
+
+    }
+}
