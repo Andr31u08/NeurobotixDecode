@@ -25,7 +25,7 @@ public class Limelight {
 
     public static LLResult result;
 
-    public static double Distance;
+    public static double Distance = 0;
     public static double targetAngle;
 
     public static double X;
@@ -39,7 +39,7 @@ public class Limelight {
     public static int patternPGPId = 0;
     public static int patternGPPId = 0;
 
-    public static void init(HardwareMap hardwareMap , int pipeline){
+    public Limelight(HardwareMap hardwareMap , int pipeline){
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(pipeline);
         limelight.start();
@@ -52,7 +52,7 @@ public class Limelight {
         }
     }
 
-    public static double fiducialDistance(){
+    public double fiducialDistance() {
         //result=limelight.getLatestResult();
         //if(result==null)return;
 
