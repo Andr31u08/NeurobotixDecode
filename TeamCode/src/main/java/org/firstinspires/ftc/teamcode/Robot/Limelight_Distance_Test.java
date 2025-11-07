@@ -11,9 +11,6 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Modules.Drive.MecanumDriveTrain;
-import org.firstinspires.ftc.teamcode.Modules.Intake.Extendo;
-import org.firstinspires.ftc.teamcode.Modules.Intake.Intake;
-import org.firstinspires.ftc.teamcode.Modules.Intake.SampleColor;
 import org.firstinspires.ftc.teamcode.Wrappers.Odo;
 
 

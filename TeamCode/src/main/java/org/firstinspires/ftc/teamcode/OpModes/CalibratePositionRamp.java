@@ -3,11 +3,6 @@ package org.firstinspires.ftc.teamcode.OpModes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Modules.Intake.Extendo;
-import org.firstinspires.ftc.teamcode.Modules.Intake.Intake;
-import org.firstinspires.ftc.teamcode.Modules.Intake.Ramp;
-import org.firstinspires.ftc.teamcode.Modules.Intake.SampleColor;
-
 @TeleOp(group = "zzzz")
 public class CalibratePositionRamp extends LinearOpMode {
 
