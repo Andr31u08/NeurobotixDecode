@@ -9,15 +9,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Modules.Drive.MecanumDriveTrain;
-import org.firstinspires.ftc.teamcode.Modules.Intake.ActiveIntake;
-import org.firstinspires.ftc.teamcode.Modules.Intake.Extendo;
-import org.firstinspires.ftc.teamcode.Modules.Intake.Intake;
-import org.firstinspires.ftc.teamcode.Modules.Intake.SampleColor;
 import org.firstinspires.ftc.teamcode.Modules.Others.Differential;
 import org.firstinspires.ftc.teamcode.Modules.Others.PTO;
 import org.firstinspires.ftc.teamcode.Modules.Others.Wheelie;
-import org.firstinspires.ftc.teamcode.Modules.Outtake.Lift;
-import org.firstinspires.ftc.teamcode.Modules.Outtake.Outtake;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
 import org.firstinspires.ftc.teamcode.Robot.Node;
 import org.firstinspires.ftc.teamcode.Wrappers.Odo;
