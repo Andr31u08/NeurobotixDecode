@@ -52,6 +52,8 @@ public class Limelight {
         }
     }
 
+    public int getFiducialId() {return fiducialId;}
+
     public double fiducialDistance() {
         //result=limelight.getLatestResult();
         //if(result==null)return;
@@ -77,7 +79,11 @@ public class Limelight {
     public static boolean isRedAlliance() {return (fiducialId == redAllianceId);}
     public static boolean isBlueAlliance() {return (fiducialId == blueAllianceId);}
 
-    public static int patternCheck() {
+    public int patternCheck() {
+        if (getFiducialId() == patternGPPId ||
+            getFiducialId() == patternPGPId ||
+            getFiducialId() == patternPPGId)
+            return 1;
         return 0;
     }
 

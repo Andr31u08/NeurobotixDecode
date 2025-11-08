@@ -123,10 +123,10 @@ public class TurretController {
      * Called every loop cycle to updateDistance turret power.
      * @param desiredAngle The target angle (in degrees), from vision or driver input.
      */
-    public void update(double desiredAngle) {
+    /*public void update(double desiredAngle) {
         currentAngle = getTurretAngle();
         turretController.update();
-    }
+    }*/
 
     // ----------------------- ANGLE TRACKING -----------------------
 
