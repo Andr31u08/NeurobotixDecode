@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Modules.turret;
+package org.firstinspires.ftc.teamcode.Modules.Turret;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.Math.BetterMotionProfile;
 import org.firstinspires.ftc.teamcode.Math.PIDController;
 import org.firstinspires.ftc.teamcode.Robot.DualMPCRServo;
-import org.firstinspires.ftc.teamcode.Wrappers.MPCRServo;
 
 /**
  * TurretController
