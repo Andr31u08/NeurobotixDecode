@@ -86,6 +86,9 @@ public class Limelight {
             return 1;
         return 0;
     }
+    public int ppgPattern() {return patternPPGId;};
+    public int pgpPattern() {return patternPGPId;};
+    public int gppPattern() {return patternGPPId;};
 
 }
 

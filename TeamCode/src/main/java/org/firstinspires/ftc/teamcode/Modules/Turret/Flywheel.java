@@ -13,9 +13,10 @@ public class Flywheel {
     private final DcMotorEx encoder;
     private final BetterMotor flywheel;
 
-    private static double power = 0.75;
+    private static double power = 0.75; // TODO: Do I even need this?
 
     //TODO: set values to these !!!
+    private static double onVelocity = 0;
     private static double targetVelocity = 0;
 
     public Flywheel (HardwareMap hardwareMap)
@@ -33,4 +34,7 @@ public class Flywheel {
     {
         flywheel.update();
     }
+    public void flywheelOn() {targetVelocity = onVelocity;}
+    public void flywheelOff() {targetVelocity = 0;}
+    public boolean checkVelocity() {return true;};
 }

@@ -17,7 +17,7 @@ public class Feeder {
     private final BetterMotor feeder;
     private final BetterServo wheel;
 
-    Node placeWheel, startFeeder, retractWheel, stopFeeder, stopNode;
+    Node placeWheel, startFeeder, retractWheel, stopFeeder, runningNode, stoppedNode;
 
     private static double retractPos = 0, loadPosition = 0;
     private double power = 0;
@@ -37,7 +37,8 @@ public class Feeder {
         startFeeder = new Node("startFeeder");
         retractWheel = new Node("retractWheel");
         stopFeeder = new Node("stopFeeeder");
-        stopNode = new Node("stopNode");
+        runningNode = new Node("runningNode");
+        stoppedNode = new Node("stoppedNode");
 
         placeWheel.addConditions(
                 () -> {
@@ -60,15 +61,15 @@ public class Feeder {
                     return true;
                 }
                 ,
-                new Node[]{stopNode}
+                new Node[]{runningNode}
         );
-        stopNode.addConditions(
+        runningNode.addConditions(
                 () -> {}
                 ,
                 () -> {return true;
                 }
                 ,
-                new Node[]{stopNode}
+                new Node[]{runningNode}
         );
         stopFeeder.addConditions(
                 () -> {
@@ -91,11 +92,20 @@ public class Feeder {
                     return false;
                 }
                 ,
-                new Node[]{stopNode}
+                new Node[]{stoppedNode}
+        );
+        stoppedNode.addConditions(
+                () -> {}
+                ,
+                () -> {
+                    return true;
+                }
+                ,
+                new Node[]{stoppedNode}
         );
     }
 
-    Node currentNode = stopNode;
+    Node currentNode = runningNode;
 
     public void startFeeder() {
         currentNode =  placeWheel;
@@ -104,5 +114,7 @@ public class Feeder {
     public void stopFeeder() {
         currentNode = stopFeeder;
     }
+    public boolean isRunning() {return (currentNode == runningNode);}
+    public boolean isStopped() {return (currentNode == stoppedNode);}
 
 }

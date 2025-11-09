@@ -17,8 +17,8 @@ public class Index {
     private int currPosition = 0;
     private int slots[] = {0, 0, 0};
     private int slotIndexer = 0;
-    private final int green = 1;
-    private final int purple = 2;
+    public final int green = 1;
+    public final int purple = 2;
     private boolean turretLoaded = false;
     public Index(HardwareMap hardwareMap)
     {
