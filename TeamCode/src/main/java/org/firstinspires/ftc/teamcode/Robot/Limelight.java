@@ -46,17 +46,22 @@ public class Limelight {
     }
 
     public void update() {
-        List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
-        for (LLResultTypes.FiducialResult fr : fiducialResults) {
-            X = fr.getTargetXDegrees(); Y = fr.getTargetYDegrees(); fiducialId = fr.getFiducialId();
-        }
+        LLResult latest = limelight.getLatestResult();
+        if (latest == null) return;
+        List<LLResultTypes.FiducialResult> fiducials = latest.getFiducialResults();
+        if (fiducials == null || fiducials.isEmpty()) return;
+        LLResultTypes.FiducialResult fr = fiducials.get(0);
+        X = fr.getTargetXDegrees();
+        Y = fr.getTargetYDegrees();
+        fiducialId = fr.getFiducialId();
     }
+
 
     public int getFiducialId() {return fiducialId;}
 
     public double fiducialDistance() {
         //result=limelight.getLatestResult();
-        //if(result==null)return;
+        // if(result==null)return;
 
         //Y= cameraHeight *Math.tan(Math.toRadians(result.getTy()+90-cameraAngle));
 

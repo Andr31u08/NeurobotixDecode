@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Modules.Index;
 
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -12,6 +13,7 @@ public class Index {
 
     private final BetterMotor index;
     private final DcMotorEx indexMotor;
+    private final ColorSensor sensor;
     private int loadingPosOffset = 0; //TODO: Set offset between regular index to intake position to turret loading position
     private int posOffset = 0; //TODO: Set offset between actual positions
     private int currPosition = 0;
@@ -25,6 +27,7 @@ public class Index {
         indexMotor = hardwareMap.get(DcMotorEx.class, "index");
         indexMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         index = new BetterMotor(indexMotor, BetterMotor.RunMode.PID, false, indexMotor, false);
+        sensor = hardwareMap.get(ColorSensor.class, "sensor");
     }
 
     public void cycleIndexer() {if (slotIndexer > 2) slotIndexer = 0;}
