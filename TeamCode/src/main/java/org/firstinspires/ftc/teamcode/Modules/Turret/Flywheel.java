@@ -36,5 +36,6 @@ public class Flywheel {
     }
     public void flywheelOn() {targetVelocity = onVelocity;}
     public void flywheelOff() {targetVelocity = 0;}
-    public boolean checkVelocity() {return true;};
+    public boolean checkVelocity() {
+        return true;};
 }

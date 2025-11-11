@@ -1,15 +1,12 @@
 package org.firstinspires.ftc.teamcode.Modules.Index;
 
-import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.Robot.Limelight;
 import org.firstinspires.ftc.teamcode.Wrappers.BetterMotor;
 
-public class Index {
+public class IndexWheel {
 
     private final BetterMotor index;
     private final DcMotorEx indexMotor;
@@ -22,7 +19,7 @@ public class Index {
     public final int green = 1;
     public final int purple = 2;
     private boolean turretLoaded = false;
-    public Index(HardwareMap hardwareMap)
+    public IndexWheel(HardwareMap hardwareMap)
     {
         indexMotor = hardwareMap.get(DcMotorEx.class, "index");
         indexMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);

@@ -146,8 +146,8 @@ public class TurretController {
         double delta = normalizeAngle(targetAngle - currentAngle);
 
         // Pick the closest equivalent target (handles wrap-around)
-        if (delta > 180) targetAngle -= 360;
-        else if (delta < -180) targetAngle += 360;
+        if (delta > 182) targetAngle -= 360;
+        else if (delta < -182) targetAngle += 360;
 
         // Keep within extended hysteresis range
         if (targetAngle > EXTENDED_MAX) targetAngle -= 360;
@@ -162,8 +162,8 @@ public class TurretController {
      * Wraps any angle into the [-180, 180) range.
      */
     private double normalizeAngle(double angle) {
-        while (angle >= 180.0) angle -= 360.0;
-        while (angle < -180.0) angle += 360.0;
+        while (angle >= 182.0) angle -= 360.0;
+        while (angle < -182.0) angle += 360.0;
         return angle;
     }
 

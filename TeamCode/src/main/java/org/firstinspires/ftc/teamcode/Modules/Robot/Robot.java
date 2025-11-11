@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Modules.Robot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Modules.Index.Feeder;
-import org.firstinspires.ftc.teamcode.Modules.Index.Index;
+import org.firstinspires.ftc.teamcode.Modules.Index.IndexWheel;
 import org.firstinspires.ftc.teamcode.Modules.Index.Intake;
 import org.firstinspires.ftc.teamcode.Modules.Turret.Flywheel;
 import org.firstinspires.ftc.teamcode.Modules.Turret.Hood;
@@ -18,7 +18,7 @@ public class Robot {
     private final Hood hood;
     private final Limelight limelight;
     private final Feeder feeder;
-    private final Index index;
+    private final IndexWheel index;
     private final Intake intake;
     private int patternId = 0;
     private boolean isRedAliance;
@@ -36,7 +36,7 @@ public class Robot {
         flywheel = new Flywheel(hardwareMap);
         hood = new Hood(hardwareMap);
         limelight = new Limelight(hardwareMap, 0);
-        index = new Index(hardwareMap);
+        index = new IndexWheel(hardwareMap);
         feeder = new Feeder(hardwareMap);
         intake = new Intake(hardwareMap);
 
@@ -110,6 +110,7 @@ public class Robot {
     public void startTurret() {currentNode = detectPattern;}
 
     public void loadArtifact() {
+
             if (patternId == limelight.gppPattern())
                 if ((gppOrder[orderIndex] == index.green && index.fastestShiftGreen() > 0) && feeder.isStopped())
                     index.loadGreen();
@@ -125,6 +126,9 @@ public class Robot {
                     index.loadGreen();
                 else if ((ppgOrder[orderIndex] == index.purple && index.fastestShiftPurple() > 0) && feeder.isStopped())
                     index.loadPurple();
+
+            orderIndex++;
+            if (orderIndex > 2) orderIndex = 0;
     }
 
     public void shoot() {

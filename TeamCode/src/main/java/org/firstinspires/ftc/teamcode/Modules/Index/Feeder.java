@@ -36,7 +36,7 @@ public class Feeder {
         placeWheel = new Node("placeWheel");
         startFeeder = new Node("startFeeder");
         retractWheel = new Node("retractWheel");
-        stopFeeder = new Node("stopFeeeder");
+        stopFeeder = new Node("stopFeeder");
         runningNode = new Node("runningNode");
         stoppedNode = new Node("stoppedNode");
 
@@ -108,7 +108,7 @@ public class Feeder {
     Node currentNode = runningNode;
 
     public void startFeeder() {
-        currentNode =  placeWheel;
+        currentNode = placeWheel;
     }
 
     public void stopFeeder() {
