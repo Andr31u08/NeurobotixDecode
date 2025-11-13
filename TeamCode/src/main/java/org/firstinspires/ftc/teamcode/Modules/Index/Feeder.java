@@ -107,6 +107,13 @@ public class Feeder {
 
     Node currentNode = runningNode;
 
+    public void update() {
+        currentNode.run();
+        if (currentNode.transition()) {
+            currentNode = currentNode.next[0];
+        }
+    }
+
     public void startFeeder() {
         currentNode = placeWheel;
     }

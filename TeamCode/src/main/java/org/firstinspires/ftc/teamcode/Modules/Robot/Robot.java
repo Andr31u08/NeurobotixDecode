@@ -107,10 +107,15 @@ public class Robot {
         SHOOTING
     }*/
 
+    public void update() {
+        currentNode.run();
+        if (currentNode.transition()) {
+            currentNode = currentNode.next[0];
+        }
+    }
+
     public void startTurret() {currentNode = detectPattern;}
-
-    public void loadArtifact() {
-
+    public void funcLoadArtifact() {
             if (patternId == limelight.gppPattern())
                 if ((gppOrder[orderIndex] == index.green && index.fastestShiftGreen() > 0) && feeder.isStopped())
                     index.loadGreen();
@@ -143,5 +148,18 @@ public class Robot {
             feeder.stopFeeder();
             shooting = false;
         }
+    }
+
+    public void checkRunIntake() {if (index.emptySlots()) intake.activateIntake(); else intake.stopIntake();}
+    public void loadArtifact() {if (!index.emptySlots()) funcLoadArtifact();}
+
+    public void noSensorLoadPurple() {index.loadPurple();}
+    public void noSensorLoadGreen() {index.loadGreen();}
+
+    public void robotUpdate() {
+        feeder.update();
+        update();
+        checkRunIntake();
+        loadArtifact();
     }
 }

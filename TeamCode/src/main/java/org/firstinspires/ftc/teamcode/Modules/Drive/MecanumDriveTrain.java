@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Math.PIDController;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
@@ -26,6 +27,9 @@ public class MecanumDriveTrain {
     BetterMotor frontLeft , frontRight;
     BetterMotor backLeft , backRight;
 
+    DcMotorEx frontleft, frontright;
+    DcMotorEx backleft, backright;
+
     public  double targetX , targetY ,x=0 ,y=0 ;
             public static double targetHeading;
     public static double error;
@@ -41,15 +45,20 @@ public class MecanumDriveTrain {
     public static double KP=1.78 , KI , KD=0.16;
    public  PIDController controllerX=new PIDController(kp , ki , kd) , controllerY=new PIDController(kp , ki , kd) , controllerHeading=new PIDController(KP , KI , KD);
 
-    public MecanumDriveTrain(State initialState)
+    public MecanumDriveTrain(State initialState, HardwareMap hardwareMap)
     {
+        frontleft = hardwareMap.get(DcMotorEx.class, "frontLeft");
+        frontright = hardwareMap.get(DcMotorEx.class, "frontRight");
+        backleft = hardwareMap.get(DcMotorEx.class, "backLeft");
+        backright = hardwareMap.get(DcMotorEx.class, "backRight");
+
         state=initialState;
 
-        frontLeft=new BetterMotor(Hardware.meh0 , BetterMotor.RunMode.RUN , frontLeftreversed);
-        frontRight=new BetterMotor(Hardware.mch1 , BetterMotor.RunMode.RUN , frontRightreversed);
+        frontLeft=new BetterMotor(frontleft , BetterMotor.RunMode.RUN , frontLeftreversed);
+        frontRight=new BetterMotor(frontright , BetterMotor.RunMode.RUN , frontRightreversed);
 
-        backLeft=new BetterMotor(Hardware.meh1 , BetterMotor.RunMode.RUN , backLeftreversed);
-        backRight=new BetterMotor(Hardware.mch2 , BetterMotor.RunMode.RUN , backRightreversed);
+        backLeft=new BetterMotor(backleft , BetterMotor.RunMode.RUN , backLeftreversed);
+        backRight=new BetterMotor(backright , BetterMotor.RunMode.RUN , backRightreversed);
 
         frontLeft.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

@@ -18,6 +18,7 @@ public class IndexWheel {
     private int slotIndexer = 0;
     public final int green = 1;
     public final int purple = 2;
+    public final int empty = 0;
     private boolean turretLoaded = false;
     public IndexWheel(HardwareMap hardwareMap)
     {
@@ -107,6 +108,14 @@ public class IndexWheel {
         slotIndexer = (slotIndexer - sSlots) % 3;
         if (slotIndexer < 0) slotIndexer += 3;
     }
+
+    public boolean emptySlots() {
+        for (int i = 0; i < 3; i++)
+            if (slots[i] != empty) return false;
+        return true;
+    }
+
+
 
     //TODO: -------------------WARNING------------ THE SETTING TO POSITION WITH GET POSITION +- SOMETHING COULD LEAD TO PROBLEMS??
     //TODO: -------------------WARNING------------ ADD TO FASTEST ROUTE CHECK FOR SLOTS WITH 0 AND ALWAYS HAVE THEM SWITCHED TO THE EMPTY SLOT

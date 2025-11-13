@@ -15,6 +15,13 @@ public class Hood {
     // TODO:
     private static double startPos = 0;
 
+
+
+    //TODO: change in dashboard for testing
+    private static double pos = 0;
+
+
+
     //TODO: derive the ecuation for the hood movement !!!
 
     public Hood (HardwareMap hardwareMap)
@@ -29,4 +36,6 @@ public class Hood {
         // TODO: Scoti ecuatia aia nebuna aici !!!
         double ecuation = 0 + 1 + 0 + 1 - 67 + 67 - 67 + 67 * limelight.fiducialDistance();
     }
+
+    public void setPosition(double pos) {hood.setPosition(pos);}
 }
