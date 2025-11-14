@@ -25,7 +25,7 @@ public class Climb extends LinearOpMode {
         Differential.init();
         Wheelie wheelie=new Wheelie();
         PTO pto=new PTO();
-        MecanumDriveTrain driveTrain=new MecanumDriveTrain(MecanumDriveTrain.State.DRIVE);
+        MecanumDriveTrain driveTrain=new MecanumDriveTrain(MecanumDriveTrain.State.DRIVE, hardwareMap);
         waitForStart();
 
 

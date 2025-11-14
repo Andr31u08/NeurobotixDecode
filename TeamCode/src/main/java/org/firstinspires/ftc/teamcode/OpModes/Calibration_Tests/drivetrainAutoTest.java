@@ -25,7 +25,7 @@ public class drivetrainAutoTest extends LinearOpMode {
         Hardware.init(hardwareMap);
         Odo.init(hardwareMap , telemetry);
 
-        MecanumDriveTrain driveTrain=new MecanumDriveTrain(MecanumDriveTrain.State.PID);
+        MecanumDriveTrain driveTrain=new MecanumDriveTrain(MecanumDriveTrain.State.PID, hardwareMap);
 
 
         waitForStart();

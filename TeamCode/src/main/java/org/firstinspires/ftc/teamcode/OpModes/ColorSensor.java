@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.OpModes;
+/*package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -31,4 +31,4 @@ public class ColorSensor extends LinearOpMode {
             telemetry.update();
         }
     }
-}
+}*/

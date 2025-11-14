@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
+/*package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -90,7 +90,7 @@ public class TeleOpWithSensors_RED extends LinearOpMode {
                     {
                         Lift.treshold=60;
                     }*/
-                }
+  /*              }
                 ,
                 ()->{
                     if(Lift.State.DOWN==outtake.lift.state && readyToBeStoppedTimer.seconds()>1.5){wheelie.goDown();readyToBeStoppedTimer.reset();
@@ -303,4 +303,4 @@ public class TeleOpWithSensors_RED extends LinearOpMode {
         }
     }
 }
-
+*/

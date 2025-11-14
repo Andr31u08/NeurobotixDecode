@@ -61,13 +61,10 @@ public class TurretController {
 
     private final CRServo turretServo1;
     private final CRServo turretServo2;
-    private final DcMotorEx turretEncoder1;
-    private final DcMotorEx turretEncoder2;
+    private final DcMotorEx turretEncoder;
 
-    private final BetterMotionProfile motionProfile1;
-    private final BetterMotionProfile motionProfile2;
-    private final PIDController pidController1;
-    private final PIDController pidController2;
+    private final BetterMotionProfile motionProfile;
+    private final PIDController pidController;
     private final DualMPCRServo turretController;
 
     //TODO: Get desired angle
@@ -81,30 +78,23 @@ public class TurretController {
     public TurretController(HardwareMap hardwareMap) {
         // Initialize hardware
         turretServo1 = hardwareMap.get(CRServo.class, "turretServo1");
-        turretEncoder1 = hardwareMap.get(DcMotorEx.class, "turretEncoder1");
+        turretEncoder = hardwareMap.get(DcMotorEx.class, "frontLeft");
 
         turretServo2 = hardwareMap.get(CRServo.class, "turretServo2");
-        turretEncoder2 = hardwareMap.get(DcMotorEx.class, "turretEncoder2");
 
-        turretEncoder1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        turretEncoder1.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        turretEncoder.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        turretEncoder.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
         // Initialize control components
-        pidController1 = new PIDController(kP1, kI1, kD1);
-        pidController2 = new PIDController(kP2, kI2, kD2);
-        motionProfile1 = new BetterMotionProfile(MAX_VEL1, ACCEL1, DECEL1);
-        motionProfile2 = new BetterMotionProfile(MAX_VEL2, ACCEL2, DECEL2);
+        pidController = new PIDController(kP1, kI1, kD1);
+        motionProfile = new BetterMotionProfile(MAX_VEL2, ACCEL2, DECEL2);
 
         // Combined motion profile + PID + feedforward control
-        turretController = new DualMPCRServo(turretServo1, turretEncoder1, turretServo2, turretEncoder2, motionProfile1, motionProfile2, pidController1, pidController2, kV, false);
+        turretController = new DualMPCRServo(turretServo1, turretEncoder, turretServo2, motionProfile, pidController, kV, false);
 
         // Reset both encoders to zero and configure for raw position tracking
-        turretEncoder1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        turretEncoder2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-
-        turretEncoder1.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-        turretEncoder2.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-
+        turretEncoder.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        turretEncoder.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     // ----------------------- MAIN CONTROL FUNCTION -----------------------
@@ -134,7 +124,7 @@ public class TurretController {
      * Returns the turret’s current angle in degrees using the REV encoder.
      */
     private double getTurretAngle() {
-        return normalizeAngle(turretController.getAverageAngle());
+        return normalizeAngle(turretController.getEncoderAngle());
     }
 
     // ----------------------- HYSTERESIS LOGIC -----------------------
