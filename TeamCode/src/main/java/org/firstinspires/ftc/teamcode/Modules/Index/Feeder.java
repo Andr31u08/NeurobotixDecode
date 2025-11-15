@@ -17,7 +17,7 @@ public class Feeder {
     private final BetterMotor feeder;
     private final BetterServo wheel;
 
-    Node placeWheel, startFeeder, retractWheel, stopFeeder, runningNode, stoppedNode;
+    Node placeWheel, startFeeder, retractWheel, stopFeeder, runningNode, stoppedNode, currentNode;
 
     private static double retractPos = 0, loadPosition = 0;
     private double power = 0;
@@ -39,6 +39,8 @@ public class Feeder {
         stopFeeder = new Node("stopFeeder");
         runningNode = new Node("runningNode");
         stoppedNode = new Node("stoppedNode");
+
+        currentNode = runningNode;
 
         placeWheel.addConditions(
                 () -> {
@@ -104,8 +106,6 @@ public class Feeder {
                 new Node[]{stoppedNode}
         );
     }
-
-    Node currentNode = runningNode;
 
     public void update() {
         currentNode.run();

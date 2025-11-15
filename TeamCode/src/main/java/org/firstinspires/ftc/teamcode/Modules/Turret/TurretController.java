@@ -36,13 +36,13 @@ public class TurretController {
     private static final double TICKS_TO_DEGREES = 360.0 / TICKS_PER_REV;
 
     //TODO: PID coefficients — tune as needed
-    private static final double kP1 = 0.015;
-    private static final double kI1 = 0.0000;
-    private static final double kD1 = 0.001;
+    private static final double kP1 = 1.015;
+    private static final double kI1 = 1.0000;
+    private static final double kD1 = 1.001;
 
-    private static final double kP2 = 0.015;
-    private static final double kI2 = 0.0000;
-    private static final double kD2 = 0.001;
+    private static final double kP2 = 1.015;
+    private static final double kI2 = 1.0000;
+    private static final double kD2 = 1.001;
 
     // Feedforward (voltage-to-speed relationship)
     // Start around 1 / maxDegreesPerSecond (empirically measured)

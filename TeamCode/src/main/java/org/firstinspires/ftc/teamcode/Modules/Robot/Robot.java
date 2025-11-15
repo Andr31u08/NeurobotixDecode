@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.Modules.Robot;
 
+import static org.firstinspires.ftc.teamcode.Wrappers.Odo.telemetry;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Modules.Index.Feeder;
 import org.firstinspires.ftc.teamcode.Modules.Index.IndexWheel;
 import org.firstinspires.ftc.teamcode.Modules.Index.Intake;
@@ -26,11 +29,14 @@ public class Robot {
     private int ppgOrder[] = {2, 2, 1}, pgpOrder[] = {2, 1, 2}, gppOrder[] = {1, 2, 2};
     private int orderIndex = 0;
 
+    private Telemetry telemetry;
+
     Node detectPattern, searchTowerTag, towerTagDetected, shoot;
+    Node currentNode;
 
     // State state;
 
-    public Robot (HardwareMap hardwareMap, boolean isRedAliance)
+    public Robot (HardwareMap hardwareMap, Telemetry telemetry, boolean isRedAliance)
     {
         turretController = new TurretController(hardwareMap);
         flywheel = new Flywheel(hardwareMap);
@@ -39,11 +45,14 @@ public class Robot {
         index = new IndexWheel(hardwareMap);
         feeder = new Feeder(hardwareMap);
         intake = new Intake(hardwareMap);
+        this.telemetry = telemetry;
 
         detectPattern = new Node("detectPattern");
         searchTowerTag = new Node("searchTowerTag");
         towerTagDetected = new Node("towerTagDetected");
         shoot = new Node("shoot");
+
+        currentNode = detectPattern;
 
         this.isRedAliance = isRedAliance;
 
@@ -99,8 +108,6 @@ public class Robot {
         );
     }
 
-    Node currentNode;
-
     /*public enum State {
         NOT_AIMING ,
         AIMING ,
@@ -150,7 +157,13 @@ public class Robot {
         }
     }
 
-    public void checkRunIntake() {if (index.emptySlots()) intake.activateIntake(); else intake.stopIntake();}
+    public void fakeLoadGreen() {
+        index.artifactGreenIn();
+    }
+    public void fakeLoadPurple() {
+        index.artifactPurpleIn();
+    }
+    public void checkRunIntake() {if (index.emptySlots()) intake.activateIntake(); else if (index.fullSlots()) intake.stopIntake();}
     public void loadArtifact() {if (!index.emptySlots()) funcLoadArtifact();}
 
     public void noSensorLoadPurple() {index.loadPurple();}
@@ -161,5 +174,7 @@ public class Robot {
         update();
         checkRunIntake();
         loadArtifact();
+        index.update();
+        telemetry.addData("Robot node:", currentNode.name);
     }
 }

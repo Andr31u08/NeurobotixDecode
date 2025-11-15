@@ -33,11 +33,11 @@ public class Limelight {
     public static int fiducialId;
 
     //TODO: Set alliance fiducial tower ids !!!
-    public static int redAllianceId = 0;
-    public static int blueAllianceId = 0;
-    public static int patternPPGId = 0;
-    public static int patternPGPId = 0;
-    public static int patternGPPId = 0;
+    public static int redAllianceId = 24;
+    public static int blueAllianceId = 20;
+    public static int patternPPGId = 23;
+    public static int patternPGPId = 22;
+    public static int patternGPPId = 21;
 
     public Limelight(HardwareMap hardwareMap , int pipeline){
         limelight = hardwareMap.get(Limelight3A.class, "limelight");

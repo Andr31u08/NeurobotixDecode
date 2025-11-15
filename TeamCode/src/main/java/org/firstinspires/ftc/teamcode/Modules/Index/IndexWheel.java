@@ -11,8 +11,8 @@ public class IndexWheel {
     private final BetterMotor index;
     private final DcMotorEx indexMotor;
     private final ColorSensor sensor;
-    private int loadingPosOffset = 0; //TODO: Set offset between regular index to intake position to turret loading position
-    private int posOffset = 0; //TODO: Set offset between actual positions
+    private int loadingPosOffset = 500; //TODO: Set offset between regular index to intake position to turret loading position
+    private int posOffset = 100; //TODO: Set offset between actual positions
     private int currPosition = 0;
     private int slots[] = {0, 0, 0};
     private int slotIndexer = 0;
@@ -24,8 +24,9 @@ public class IndexWheel {
     {
         indexMotor = hardwareMap.get(DcMotorEx.class, "index");
         indexMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        index = new BetterMotor(indexMotor, BetterMotor.RunMode.PID, false, indexMotor, false);
+        index = new BetterMotor(indexMotor, BetterMotor.RunMode.RUN, false, indexMotor, false);
         sensor = hardwareMap.get(ColorSensor.class, "sensor");
+        //index.setPidCoefficients(0.5, 0 , 0);
     }
 
     public void cycleIndexer() {if (slotIndexer > 2) slotIndexer = 0;}
@@ -36,6 +37,9 @@ public class IndexWheel {
         cycleIndexer();
         index.setPosition(currPosition + posOffset);
         currPosition += posOffset;
+        //index.update();
+        //index.setPosition(currPosition);
+        index.runToPosition(currPosition, 0.5);
     }
 
     public void artifactPurpleIn() {
@@ -44,6 +48,9 @@ public class IndexWheel {
         cycleIndexer();
         index.setPosition(currPosition + posOffset);
         currPosition += posOffset;
+        //index.update();
+        //index.setPosition(currPosition);
+        index.runToPosition(currPosition, 0.5);
     }
 
     public int fastestShiftGreen() {
@@ -83,6 +90,9 @@ public class IndexWheel {
             index.setPosition(currPosition - loadingPosOffset);
             currPosition -= loadingPosOffset;
         }
+        //index.update();
+        //index.setPosition(currPosition);
+        index.runToPosition(currPosition, 0.5);
     }
 
     public void loadPurple() {
@@ -95,6 +105,9 @@ public class IndexWheel {
 
         slotIndexer = (slotIndexer - sSlots) % 3;
         if (slotIndexer < 0) slotIndexer += 3;
+        //index.update();
+        //index.setPosition(currPosition);
+        index.runToPosition(currPosition, 0.5);
     }
 
     public void loadGreen() {
@@ -107,12 +120,26 @@ public class IndexWheel {
 
         slotIndexer = (slotIndexer - sSlots) % 3;
         if (slotIndexer < 0) slotIndexer += 3;
+        //index.update();
+        //index.setPosition(currPosition);
+        index.runToPosition(currPosition, 0.5);
     }
 
     public boolean emptySlots() {
         for (int i = 0; i < 3; i++)
             if (slots[i] != empty) return false;
         return true;
+    }
+
+    public boolean fullSlots() {
+        for (int i = 0; i < 3; i++)
+            if (slots[i] == empty) return false;
+        return true;
+    }
+
+    public void update() {
+        //index.setPower(0.5);
+        //index.update();
     }
 
 
