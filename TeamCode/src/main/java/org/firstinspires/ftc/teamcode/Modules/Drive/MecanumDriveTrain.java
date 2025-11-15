@@ -36,7 +36,7 @@ public class MecanumDriveTrain {
     double rotation;
     public boolean usingTargetHeading=true;
 
-    public static boolean frontLeftreversed=true , frontRightreversed=false , backLeftreversed=true , backRightreversed=false;
+    public static boolean frontLeftreversed=false , frontRightreversed=false , backLeftreversed=true , backRightreversed=true;
 
     public static double lateralMultiplier=2.5;
     public static  double realHeading;

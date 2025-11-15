@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Wrappers.BetterMotor;
 public class Flywheel {
 
     private final DcMotorEx wheelMotor;
-    private final DcMotorEx encoder;
+    //private final DcMotorEx encoder;
     private final BetterMotor flywheel;
 
     private static double power = 0.75; // TODO: Do I even need this?
@@ -23,9 +23,9 @@ public class Flywheel {
     {
         wheelMotor = hardwareMap.get(DcMotorEx.class, "flywheel");
         unlock(wheelMotor);
-        encoder = hardwareMap.get(DcMotorEx.class, "encoder");
+        //encoder = hardwareMap.get(DcMotorEx.class, "frontRight");
 
-        flywheel = new BetterMotor(wheelMotor, BetterMotor.RunMode.PIDVELOCITY, false, encoder,targetVelocity, false);
+        flywheel = new BetterMotor(wheelMotor, BetterMotor.RunMode.PIDVELOCITY, false, wheelMotor, targetVelocity, false);
         flywheel.maxVelocityAtFullPower = 0; // TODO: Set this value !!!
         flywheel.setPidCoefficients(0, 0.5, 0);
     }
