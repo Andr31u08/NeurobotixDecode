@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Modules.Index;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -10,17 +12,26 @@ import org.firstinspires.ftc.teamcode.Robot.Node;
 import org.firstinspires.ftc.teamcode.Wrappers.BetterMotor;
 import org.firstinspires.ftc.teamcode.Wrappers.BetterServo;
 
+@Config
 public class Feeder {
 
+    FtcDashboard dashboard;
     private final Servo wheelServo;
     private final DcMotorEx feederMotor;
     private final BetterMotor feeder;
     private final BetterServo wheel;
 
-    Node placeWheel, startFeeder, retractWheel, stopFeeder, runningNode, stoppedNode, currentNode;
+    Node placeWheel;
+    Node startFeeder;
+    Node retractWheel;
+    Node stopFeeder;
+    Node runningNode;
+    Node stoppedNode;
+    public Node currentNode;
 
-    private static double retractPos = 0, loadPosition = 0;
-    private double power = 0;
+    public static double retractPos = 0, loadPosition = 0, testPos = 0;
+    public static double MaxVelocoty=20 , Acceleration=32  , Deceleration=32;
+    public double power = 0.5;
 
     public Feeder(HardwareMap hardwareMap)
     {
@@ -30,8 +41,12 @@ public class Feeder {
         feederMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         feederMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
+        dashboard = FtcDashboard.getInstance();
+
         feeder = new BetterMotor(feederMotor, BetterMotor.RunMode.RUN, false);
         wheel = new BetterServo("wheel", wheelServo, BetterServo.RunMode.PROFILE, retractPos, false);
+
+        wheel.setProfileCoefficients(MaxVelocoty, Acceleration, Deceleration);
 
         placeWheel = new Node("placeWheel");
         startFeeder = new Node("startFeeder");
@@ -111,6 +126,8 @@ public class Feeder {
         currentNode.run();
         if (currentNode.transition()) {
             currentNode = currentNode.next[0];
+
+            wheel.update();
         }
     }
 
@@ -123,5 +140,9 @@ public class Feeder {
     }
     public boolean isRunning() {return (currentNode == runningNode);}
     public boolean isStopped() {return (currentNode == stoppedNode);}
+
+    //TODO: Debugging methods
+
+    public void setTestPosition() {wheel.setPosition(testPos);}
 
 }

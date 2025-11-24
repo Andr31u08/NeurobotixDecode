@@ -13,7 +13,7 @@ public class Flywheel {
     //private final DcMotorEx encoder;
     private final BetterMotor flywheel;
 
-    private static double power = 0.75; // TODO: Do I even need this?
+    private static double power = 0; // TODO: Do I even need this?
 
     //TODO: set values to these !!!
     private static double onVelocity = 0;
@@ -25,7 +25,7 @@ public class Flywheel {
         unlock(wheelMotor);
         //encoder = hardwareMap.get(DcMotorEx.class, "frontRight");
 
-        flywheel = new BetterMotor(wheelMotor, BetterMotor.RunMode.PIDVELOCITY, false, wheelMotor, targetVelocity, false);
+        flywheel = new BetterMotor(wheelMotor, BetterMotor.RunMode.PIDVELOCITY, true, wheelMotor, targetVelocity, false);
         flywheel.maxVelocityAtFullPower = 0; // TODO: Set this value !!!
         flywheel.setPidCoefficients(0, 0.5, 0);
     }
@@ -34,7 +34,7 @@ public class Flywheel {
     {
         flywheel.update();
     }
-    public void flywheelOn() {targetVelocity = onVelocity;}
+    public void flywheelOn() {targetVelocity = onVelocity; flywheel.setPower(0);}
     public void flywheelOff() {targetVelocity = 0;}
     public boolean checkVelocity() {
         return true;};

@@ -10,6 +10,9 @@ public class BetterMotionProfile {
     double initialVelocity;
     public ElapsedTime timer=new ElapsedTime();
     double distance , highVelocity , distance1 , distance3 , distance2 , t1 , t3 , t2 , position , velocity;
+
+    private static final double POSITION_EPS = 0.002;
+
     public BetterMotionProfile(double maxVelocity , double acceleration , double deceleration)
     {
         this.maxVelocity=maxVelocity;
@@ -65,5 +68,9 @@ public class BetterMotionProfile {
     {
         updatePosition();
         updateVelocity();
+    }
+
+    public boolean isAtTarget() {
+        return Math.abs(finalPosition - position) <= POSITION_EPS;
     }
 }

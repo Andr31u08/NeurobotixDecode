@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.Modules.Robot;
 
-import static org.firstinspires.ftc.teamcode.Wrappers.Odo.telemetry;
-
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -29,23 +27,22 @@ public class Robot {
     private int ppgOrder[] = {2, 2, 1}, pgpOrder[] = {2, 1, 2}, gppOrder[] = {1, 2, 2};
     private int orderIndex = 0;
 
-    private Telemetry telemetry;
+    private double currentAngle;
 
     Node detectPattern, searchTowerTag, towerTagDetected, shoot;
-    Node currentNode;
+    public Node currentNode;
 
     // State state;
 
-    public Robot (HardwareMap hardwareMap, Telemetry telemetry, boolean isRedAliance)
+    public Robot (HardwareMap hardwareMap, boolean isRedAliance)
     {
         turretController = new TurretController(hardwareMap);
         flywheel = new Flywheel(hardwareMap);
         hood = new Hood(hardwareMap);
-        limelight = new Limelight(hardwareMap, 0);
+        limelight = new Limelight(hardwareMap, 7);
         index = new IndexWheel(hardwareMap);
         feeder = new Feeder(hardwareMap);
         intake = new Intake(hardwareMap);
-        this.telemetry = telemetry;
 
         detectPattern = new Node("detectPattern");
         searchTowerTag = new Node("searchTowerTag");
@@ -79,6 +76,7 @@ public class Robot {
                 () -> {
                     if ((limelight.isBlueAlliance() && !isRedAliance) ||
                             (limelight.isRedAlliance() && isRedAliance)) {
+                        currentAngle = getTurretAngle();
                         flywheel.flywheelOn();
                         return true;
                     }
@@ -89,8 +87,7 @@ public class Robot {
         );
         towerTagDetected.addConditions(
                 () -> {
-                    limelight.update();
-                    turretController.setTargetAngle(limelight.X);
+                    turretController.setTargetAngle(currentAngle+limelight.X);
                     hood.updatePosition();
                     flywheel.updateFlyheel();
                 }
@@ -169,12 +166,25 @@ public class Robot {
     public void noSensorLoadPurple() {index.loadPurple();}
     public void noSensorLoadGreen() {index.loadGreen();}
 
+    //TODO: Debug methods
+    public void activeFlywheel() {flywheel.flywheelOn();}
+    public void startFeeder() {feeder.startFeeder();}
+    public void stopFeeder() {feeder.stopFeeder();}
+    public String getFeederStateName() {return feeder.currentNode.name;}
+    public void setFeederTestPosition() {feeder.setTestPosition();}
+    public boolean totemDetected() {return (limelight.patternCheck() == 1);}
+    public int getFiducialId() {return limelight.getFiducialId();}
+    public double getXll() {return limelight.X;}
+    public double getTurretAngle() {return turretController.getCurrentAngle();}
+    public double getTurretTargetAngle() {return turretController.getEffectiveTargetAngle();}
+    //public double getEncoderPosition() {return turretController.getEcoderPosition();}
+
     public void robotUpdate() {
         feeder.update();
         update();
         checkRunIntake();
         loadArtifact();
         index.update();
-        telemetry.addData("Robot node:", currentNode.name);
+        turretController.update();
     }
 }

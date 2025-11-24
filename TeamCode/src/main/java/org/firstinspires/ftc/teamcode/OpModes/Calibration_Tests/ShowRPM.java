@@ -16,7 +16,7 @@ public class ShowRPM {
     private void RPM(){
         while (true){
             if(gamepad1.right_bumper){
-                shooter.setPower(1);
+                shooter.setPower(0.75);
             }
             telemetry.addData("Current RPM : ", shooter.getVelocity()/shooter.getMotorType().getTicksPerRev() * 60);
             telemetry.update();

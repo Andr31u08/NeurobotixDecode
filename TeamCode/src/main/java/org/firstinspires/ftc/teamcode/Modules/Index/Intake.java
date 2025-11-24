@@ -10,7 +10,7 @@ public class Intake {
 
     private final DcMotorEx intakeMotor;
     private final BetterMotor intake;
-    private double power = 1;
+    private double power = 0;
 
     public Intake (HardwareMap hardwareMap)
     {

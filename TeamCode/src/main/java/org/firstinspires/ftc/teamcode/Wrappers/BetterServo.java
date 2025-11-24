@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.Wrappers;
 
 
+import static androidx.core.math.MathUtils.clamp;
+
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -13,6 +15,10 @@ public class BetterServo {
         Time,
         GoToPosition;
     }
+
+    private static final double POSITION_EPS = 0.002;   // tolerance
+    private static final double MIN_POS = 0.0;
+    private static final double MAX_POS = 1.0;
 
     public ElapsedTime timer=new ElapsedTime();
     public double time;
@@ -82,13 +88,14 @@ public class BetterServo {
                 break;
             case GoToPosition:
                 reachedPosition=true;
-                servo.setPosition(position);
                 this.position=position;
+                servo.setPosition(clamp(position));
                 break;
             case Time:
+                double target = clamp(position);
                 if(servo.getPosition()==position)return;
                 reachedPosition=false;
-                servo.setPosition(position);
+                servo.setPosition(target);
                 timer.reset();
                 this.position=position;
                 break;
@@ -121,12 +128,16 @@ public class BetterServo {
         if(runMode==RunMode.PROFILE){
         profile.update();
         position=profile.getPosition();
-        servo.setPosition(profile.getPosition());
 
-        reachedPosition = profile.finalPosition == position;}
+        double out = clamp(position);
+        //servo.setPosition(profile.getPosition());
+            servo.setPosition(out);
 
+        reachedPosition = profile.isAtTarget();}
+    }
 
-
+    private double clamp(double v) {
+        return Math.max(MIN_POS, Math.min(MAX_POS, v));
     }
 
 }
