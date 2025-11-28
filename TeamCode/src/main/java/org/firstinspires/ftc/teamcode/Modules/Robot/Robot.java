@@ -177,6 +177,14 @@ public class Robot {
     public double getXll() {return limelight.X;}
     public double getTurretAngle() {return turretController.getCurrentAngle();}
     public double getTurretTargetAngle() {return turretController.getEffectiveTargetAngle();}
+
+    public int getCurrentIndexTarget() {return index.getCurrentIndexTarget();}
+    public int getCurrentIndexActualPosition() {return index.getCurrentIndexActualPosition();}
+    public boolean getToggled() {return index.getToggled();}
+    public boolean isPurple() {return index.isPurple();}
+    public double RedAmount() {return index.RedAmount();}
+    public double GreenAmount() {return index.GreenAmount();}
+    public double BlueAmount() {return index.BlueAmount();}
     //public double getEncoderPosition() {return turretController.getEcoderPosition();}
 
     public void robotUpdate() {

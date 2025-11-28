@@ -60,6 +60,13 @@ public class TestTeleOpDecode extends LinearOpMode {
             telemetry.addData("Limelight x: ", robot.getXll());
             telemetry.addData("Turret angle: ", robot.getTurretAngle());
             telemetry.addData("Turret target angle: ", robot.getTurretTargetAngle());
+            telemetry.addData("Index current target position: ", robot.getCurrentIndexTarget());
+            telemetry.addData("Index current actual position: ", robot.getCurrentIndexActualPosition());
+            telemetry.addData("Index is toggled: ", robot.getToggled());
+            telemetry.addData("Sensor gets purple: ", robot.isPurple());
+            telemetry.addData("Red amount: ", robot.RedAmount());
+            telemetry.addData("Green amount: ", robot.GreenAmount());
+            telemetry.addData("Blue amount: ", robot.BlueAmount());
             //telemetry.addData("Turret encoder position: ", robot.getEncoderPosition());
             telemetry.update();
         }
