@@ -21,12 +21,12 @@ public class Sensor {
     }
 
     public boolean isPurple() {
-        return (r < 0.4 && g < 0.3 && b > 0.5)
+        return (r > 0.0014 && g < 0.003 && b > 0.003)
                 && (b > r && b > g);
     }
 
     public boolean isGreen() {
-        return (r < 0.3 && g > 0.5 && b < 0.4)
+        return (r < 0.001 && g > 0.0025 && b > 0.002)
                 && (g > r && g > b);
     }
 

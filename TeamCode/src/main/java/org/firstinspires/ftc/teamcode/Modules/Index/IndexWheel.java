@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Math.PID;
 import org.firstinspires.ftc.teamcode.Wrappers.BetterMotor;
+import org.firstinspires.ftc.teamcode.Wrappers.SampleColor;
 import org.firstinspires.ftc.teamcode.Wrappers.Sensor;
 
 @Config
@@ -21,9 +22,9 @@ public class IndexWheel {
 
     //private int loadingPosOffset = 500; // Set offset between regular index to intake position to turret loading position
     //private int posOffset = 100; // Set offset between actual positions
-    private int currPosition;
+    public static int currPosition;
 
-    public static int nlPos1 = 0, nlPos2 = 60, nlPos3 = 120, lPos1 = 20, lPos2 = 80, lPos3 = 140;
+    public static int nlPos1 = 0, nlPos2 = 67, nlPos3 = 140, lPos1 = 35, lPos2 = 105, lPos3 = 170;
 
     private final int[] slots = {0, 0, 0};
 
@@ -33,6 +34,10 @@ public class IndexWheel {
 
     private int slotIndexer = 0;
     private int positionIndexer = 0;
+    private int stopLoadIndexer;
+    private int sSlots;
+
+    private int emptyStartPosIndex = currPositions[positionIndexer];
 
     public final int green = 1;
     public final int purple = 2;
@@ -62,7 +67,9 @@ public class IndexWheel {
         slotIndexer++;
         cycleIndexer();
         //index.setPosition(currPosition + posOffset);
-        currPosition = currPositions[++positionIndexer];
+        if (positionIndexer != 2)
+            currPosition = currPositions[++positionIndexer];
+        stopLoadIndexer++;
         //index.update();
         //index.setPosition(currPosition);
         index.setTargetPosition(currPosition);
@@ -74,7 +81,9 @@ public class IndexWheel {
         cycleIndexer();
         //index.setPosition(currPosition + posOffset);
         //currPosition += posOffset;
-        currPosition = currPositions[++positionIndexer];
+        if (positionIndexer != 2)
+            currPosition = currPositions[++positionIndexer];
+        stopLoadIndexer++;
         //index.update();
         //index.setPosition(currPosition);
         index.setTargetPosition(currPosition);
@@ -123,11 +132,12 @@ public class IndexWheel {
         }
         //index.update();
         //index.setPosition(currPosition);
+        currPosition = currPositions[positionIndexer];
         index.setTargetPosition(currPositions[positionIndexer]);
     }
 
     public void loadPurple() {
-        int sSlots = fastestShiftPurple();
+        sSlots = fastestShiftPurple();
         if (sSlots == 3) return;
 
         positionIndexer += sSlots;
@@ -145,7 +155,7 @@ public class IndexWheel {
     }
 
     public void loadGreen() {
-        int sSlots = fastestShiftGreen();
+        sSlots = fastestShiftGreen();
         if (sSlots == 3) return;
 
         positionIndexer += sSlots;
@@ -163,22 +173,28 @@ public class IndexWheel {
     }
 
     public void checkLoading() {
-        if ((!loadingMotion()) && sensor.isGreen())
-            loadGreen();
-        if ((!loadingMotion()) && sensor.isPurple())
-            loadPurple();
+        if (stopLoadIndexer < 3) {
+            if ((!loadingMotion()) && sensor.isGreen())
+                artifactGreenIn();
+            if ((!loadingMotion()) && sensor.isPurple())
+                artifactPurpleIn();
+        }
     }
 
     public boolean loadingMotion() {
         if ((sensor.isGreen() || sensor.isPurple()) &&
-                Math.abs(index.getCurrentPosition()-currPosition) > 70)
+                Math.abs(index.getCurrentPosition()-currPosition) > 3)
             return true;
         return false;
     }
 
     public boolean emptySlots() {
         for (int i = 0; i < 3; i++)
-            if (slots[i] != empty) return false;
+            if (slots[i] != empty) {
+                //emptyStartPosIndex = positionIndexer;
+                stopLoadIndexer = 0;
+                return false;
+            }
         return true;
     }
 
@@ -189,8 +205,8 @@ public class IndexWheel {
     }
 
     public void checkToggleable() {
-        if (fullSlots()) loadTurretToggle();
-        if (emptySlots() && (!turretLoaded)) loadTurretToggle();
+        if (fullSlots() && !turretLoaded) loadTurretToggle();
+        if (emptySlots() && turretLoaded) loadTurretToggle();
     }
 
     public void launchArtifact() {
@@ -204,6 +220,7 @@ public class IndexWheel {
         int currpos = index.getCurrentPosition();
         double value = pid.update(currPosition, currpos, kp, kd, ki, f);
         index.setPower(value);
+        sensor.updateColors();
     }
 
 
@@ -211,11 +228,13 @@ public class IndexWheel {
     //TODO: -------------------WARNING------------ THE SETTING TO POSITION WITH GET POSITION +- SOMETHING COULD LEAD TO PROBLEMS??
     //TODO: -------------------WARNING------------ ADD TO FASTEST ROUTE CHECK FOR SLOTS WITH 0 AND ALWAYS HAVE THEM SWITCHED TO THE EMPTY SLOT
 
-    public int getCurrentIndexTarget() {return currPosition;}
+    public int getCurrentIndexTarget() {return positionIndexer;}
     public int getCurrentIndexActualPosition() {return index.getCurrentPosition();}
     public boolean getToggled() {return turretLoaded;}
     public boolean isPurple() {return sensor.isPurple();}
-    public double RedAmount() {return sensor.RedAmount();}
-    public double GreenAmount() {return sensor.GreenAmount();}
-    public double BlueAmount() {return sensor.BlueAmount();}
+    public boolean isGreen() {return sensor.isGreen();}
+    public double RedAmount() {return sensor.r;}
+    public double GreenAmount() {return sensor.g;}
+    public double BlueAmount() {return sensor.b;}
+    public boolean areSlotsFull() {return fullSlots();}
 }

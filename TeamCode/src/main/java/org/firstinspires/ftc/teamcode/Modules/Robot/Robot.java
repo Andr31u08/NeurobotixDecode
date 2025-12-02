@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Modules.Robot;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -27,6 +28,8 @@ public class Robot {
     private int ppgOrder[] = {2, 2, 1}, pgpOrder[] = {2, 1, 2}, gppOrder[] = {1, 2, 2};
     private int orderIndex = 0;
 
+    //private final ColorSensor sensor;
+
     private double currentAngle;
 
     Node detectPattern, searchTowerTag, towerTagDetected, shoot;
@@ -43,6 +46,8 @@ public class Robot {
         index = new IndexWheel(hardwareMap);
         feeder = new Feeder(hardwareMap);
         intake = new Intake(hardwareMap);
+
+        //sensor = hardwareMap.get(ColorSensor.class, "sensor");
 
         detectPattern = new Node("detectPattern");
         searchTowerTag = new Node("searchTowerTag");
@@ -154,6 +159,14 @@ public class Robot {
         }
     }
 
+    public void loadGreen() {
+        index.loadGreen();
+    }
+
+    public void loadPurple() {
+        index.loadPurple();
+    }
+
     public void fakeLoadGreen() {
         index.artifactGreenIn();
     }
@@ -182,10 +195,14 @@ public class Robot {
     public int getCurrentIndexActualPosition() {return index.getCurrentIndexActualPosition();}
     public boolean getToggled() {return index.getToggled();}
     public boolean isPurple() {return index.isPurple();}
+    public boolean isGreen() {return index.isGreen();}
     public double RedAmount() {return index.RedAmount();}
     public double GreenAmount() {return index.GreenAmount();}
     public double BlueAmount() {return index.BlueAmount();}
     //public double getEncoderPosition() {return turretController.getEcoderPosition();}
+    public boolean areSlotsFull() {return index.areSlotsFull();}
+
+    //public int testRed() {return sensor.green();}
 
     public void robotUpdate() {
         feeder.update();

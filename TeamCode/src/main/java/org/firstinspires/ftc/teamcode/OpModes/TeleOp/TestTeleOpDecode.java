@@ -39,10 +39,10 @@ public class TestTeleOpDecode extends LinearOpMode {
 
             driveTrain.setTargetVector(x, y, rotation);
             if (gamepad.isAPressed())
-                robot.fakeLoadGreen();
+                robot.loadGreen();
 
             if (gamepad.isBPressed())
-                robot.fakeLoadPurple();
+                robot.loadPurple();
 
             if (gamepad.isXPressed())
                 robot.startFeeder();
@@ -64,9 +64,12 @@ public class TestTeleOpDecode extends LinearOpMode {
             telemetry.addData("Index current actual position: ", robot.getCurrentIndexActualPosition());
             telemetry.addData("Index is toggled: ", robot.getToggled());
             telemetry.addData("Sensor gets purple: ", robot.isPurple());
+            telemetry.addData("Sensor gets green: ", robot.isGreen());
             telemetry.addData("Red amount: ", robot.RedAmount());
             telemetry.addData("Green amount: ", robot.GreenAmount());
             telemetry.addData("Blue amount: ", robot.BlueAmount());
+            telemetry.addData("Are slots full: ", robot.areSlotsFull());
+            //telemetry.addData("test red amount: ", robot.testRed());
             //telemetry.addData("Turret encoder position: ", robot.getEncoderPosition());
             telemetry.update();
         }
