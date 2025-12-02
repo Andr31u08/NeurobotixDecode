@@ -31,6 +31,8 @@ public class TurretController {
         turretController = new DualMPCRServo(turretServo1, turretEncoder, turretServo2, pidController, false);
     }
 
+
+    // Added a change!
     public void setTargetAngle(double angle) {
         double delta = normalizeAngle(angle - getCurrentAngle());
         if (delta > 180) angle -= 360;
