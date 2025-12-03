@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Robot.Node;
 public class Robot {
 
     private final TurretController turretController;
-    private final Flywheel flywheel;
+    public final Flywheel flywheel;
     private final Hood hood;
     private final Limelight limelight;
     private final Feeder feeder;
@@ -37,7 +37,8 @@ public class Robot {
 
     // State state;
 
-    public Robot (HardwareMap hardwareMap, boolean isRedAliance)
+    // public Robot (HardwareMap hardwareMap, boolean isRedAliance)
+    public Robot(HardwareMap hardwareMap)
     {
         turretController = new TurretController(hardwareMap);
         flywheel = new Flywheel(hardwareMap);
@@ -56,7 +57,7 @@ public class Robot {
 
         currentNode = detectPattern;
 
-        this.isRedAliance = isRedAliance;
+        //this.isRedAliance = isRedAliance;
 
         detectPattern.addConditions(
                 () -> {

@@ -36,6 +36,9 @@ public class Flywheel {
     }
     public void flywheelOn() {targetVelocity = onVelocity; flywheel.setPower(0);}
     public void flywheelOff() {targetVelocity = 0;}
+    public void testFlyWheel (double powerT) {
+        flywheel.setPower(powerT);
+    }
     public boolean checkVelocity() {
         return true;};
 }
