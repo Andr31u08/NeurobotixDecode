@@ -18,7 +18,7 @@ public class Feeder {
     FtcDashboard dashboard;
     private final Servo wheelServo;
     private final DcMotorEx feederMotor;
-    private final BetterMotor feeder;
+    public final BetterMotor feeder;
     private final BetterServo wheel;
 
     Node placeWheel;
@@ -43,7 +43,7 @@ public class Feeder {
 
         dashboard = FtcDashboard.getInstance();
 
-        feeder = new BetterMotor(feederMotor, BetterMotor.RunMode.RUN, false);
+        feeder = new BetterMotor(feederMotor, BetterMotor.RunMode.RUN, true);
         wheel = new BetterServo("wheel", wheelServo, BetterServo.RunMode.PROFILE, retractPos, false);
 
         wheel.setProfileCoefficients(MaxVelocoty, Acceleration, Deceleration);

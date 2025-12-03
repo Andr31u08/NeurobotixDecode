@@ -19,7 +19,7 @@ public class Robot {
     public final Flywheel flywheel;
     private final Hood hood;
     private final Limelight limelight;
-    private final Feeder feeder;
+    public final Feeder feeder;
     private final IndexWheel index;
     private final Intake intake;
     private int patternId = 0;
@@ -37,8 +37,7 @@ public class Robot {
 
     // State state;
 
-    // public Robot (HardwareMap hardwareMap, boolean isRedAliance)
-    public Robot(HardwareMap hardwareMap)
+    public Robot (HardwareMap hardwareMap, boolean isRedAliance)
     {
         turretController = new TurretController(hardwareMap);
         flywheel = new Flywheel(hardwareMap);
@@ -57,7 +56,7 @@ public class Robot {
 
         currentNode = detectPattern;
 
-        //this.isRedAliance = isRedAliance;
+        this.isRedAliance = isRedAliance;
 
         detectPattern.addConditions(
                 () -> {

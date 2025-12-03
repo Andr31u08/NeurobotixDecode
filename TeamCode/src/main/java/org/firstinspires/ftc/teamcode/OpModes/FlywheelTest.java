@@ -9,8 +9,9 @@ import org.firstinspires.ftc.teamcode.Modules.Robot.Robot;
 public class FlywheelTest extends LinearOpMode {
     public Robot robot;
     public double power;
+    boolean isRedAlliance;
     public void runOpMode() {
-        robot = new Robot(hardwareMap);
+        robot = new Robot(hardwareMap, isRedAlliance);
 
         waitForStart();
         while(opModeIsActive())
@@ -18,14 +19,15 @@ public class FlywheelTest extends LinearOpMode {
             robot.flywheel.testFlyWheel(power);
             if (gamepad1.dpad_up && power < 1)
             {
-                power = power + 0.05;
+                power = power + 0.01;
                 sleep(100);
             }
             if (gamepad1.dpad_down && power > 0)
             {
-                power = power - 0.05;
+                power = power - 0.01;
                 sleep(100);
             }
+            robot.feeder.feeder.setPower(1);
             telemetry.addData("power: ", power);
             telemetry.update();
         }
