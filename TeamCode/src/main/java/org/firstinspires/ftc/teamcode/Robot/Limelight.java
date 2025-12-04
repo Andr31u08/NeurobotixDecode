@@ -60,6 +60,8 @@ public class Limelight {
 
         return Y;
     }
+
+    public double getX() {return X;}
     public int getFiducialId() {return fiducialId;}
 
     public double fiducialDistance() {
