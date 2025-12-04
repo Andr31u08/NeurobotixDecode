@@ -19,9 +19,6 @@ public class Hood {
     public final double PI = 3.1415926;
     public final double CIRCLE_FRACTION = MAX_ANGLE/360;
 
-    //TODO: change in dashboard for testing
-    private static double pos = 0;
-
     //TODO: derive the ecuation for the hood movement !!!
 
     public Hood (HardwareMap hardwareMap)
@@ -43,9 +40,9 @@ public class Hood {
         return angle;
     }
 
-    public void setServoPos(double Angle) {
+    public void setServoPos(double Angle, BetterServo servo) {
         servoPosition = 1 * Angle / MAX_ANGLE;
-        hood.setPosition(servoPosition);
+        servo.setPosition(servoPosition);
     }
 
     public double distanceToTarget (Limelight limelight, boolean isRedAlliance) {
@@ -61,6 +58,5 @@ public class Hood {
         else
             return 0;
     }
-
-    public void setPosition(double pos) {hood.setPosition(pos);}
+    public BetterServo getServo() {return hood;}
 }
