@@ -69,6 +69,7 @@ public class TestTeleOpDecode extends LinearOpMode {
             telemetry.addData("Green amount: ", robot.GreenAmount());
             telemetry.addData("Blue amount: ", robot.BlueAmount());
             telemetry.addData("Are slots full: ", robot.areSlotsFull());
+            telemetry.addData("Limelight Y angle: ",robot.getY());
             //telemetry.addData("test red amount: ", robot.testRed());
             //telemetry.addData("Turret encoder position: ", robot.getEncoderPosition());
             telemetry.update();

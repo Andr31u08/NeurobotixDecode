@@ -204,6 +204,7 @@ public class Robot {
 
     //public int testRed() {return sensor.green();}
 
+    public double getY() {return limelight.getY();}
     public void robotUpdate() {
         feeder.update();
         update();

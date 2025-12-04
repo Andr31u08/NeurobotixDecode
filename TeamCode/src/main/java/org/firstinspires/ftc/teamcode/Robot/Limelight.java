@@ -56,7 +56,10 @@ public class Limelight {
         fiducialId = fr.getFiducialId();
     }
 
+    public double getY() {
 
+        return Y;
+    }
     public int getFiducialId() {return fiducialId;}
 
     public double fiducialDistance() {
