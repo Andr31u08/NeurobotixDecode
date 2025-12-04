@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Wrappers.BetterServo;
 public class HoodTest extends LinearOpMode {
     Hood hood;
     Limelight limelight;
-    BetterServo servo;
+    Servo servo;
     double distance, angle, speed;
     public void runOpMode() {
         hood = new Hood(hardwareMap);
@@ -22,11 +22,14 @@ public class HoodTest extends LinearOpMode {
         waitForStart();
         while(opModeIsActive())
         {
-            distance = hood.distanceToTarget(limelight, true);
+            distance = hood.distanceToTarget(limelight, false);
             angle = hood.calculateAngle(distance);
             hood.setServoPos(angle, servo);
             telemetry.addData("distance: ", distance);
             telemetry.addData("angle: ", angle);
+            telemetry.addData("latest: ", limelight.getFiducialId());
+            telemetry.update();
+            limelight.update();
         }
     }
 }

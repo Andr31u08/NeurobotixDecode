@@ -25,7 +25,7 @@ public class Hood {
     {
         hoodServo = hardwareMap.get(Servo.class, "HoodServo");
         hood = new BetterServo("HoodServo", hoodServo, BetterServo.RunMode.PROFILE, startPos, false);
-        limelight = new Limelight(hardwareMap, 0);
+        limelight = new Limelight(hardwareMap, 7);
     }
     public double calculateAngle(double distance)
     {
@@ -40,9 +40,11 @@ public class Hood {
         return angle;
     }
 
-    public void setServoPos(double Angle, BetterServo servo) {
+    public void setServoPos(double Angle, Servo servo) {
         servoPosition = 1 * Angle / MAX_ANGLE;
-        servo.setPosition(servoPosition);
+        // TODO Needs further testing
+        if(servoPosition < 1)
+            servo.setPosition(servoPosition);
     }
 
     public double distanceToTarget (Limelight limelight, boolean isRedAlliance) {
@@ -58,5 +60,9 @@ public class Hood {
         else
             return 0;
     }
-    public BetterServo getServo() {return hood;}
+    public Servo getServo() {return hoodServo;}
+    public void updatePosition()
+    {
+
+    }
 }
