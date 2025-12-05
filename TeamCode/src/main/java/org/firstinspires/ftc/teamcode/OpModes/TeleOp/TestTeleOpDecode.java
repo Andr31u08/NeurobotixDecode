@@ -52,7 +52,7 @@ public class TestTeleOpDecode extends LinearOpMode {
             if (gamepad.isDpadDownPressed())
                 robot.setFeederTestPosition();
 
-            telemetry.addData("Robot node state machine state: ", robot.currentNode.name);
+            //telemetry.addData("Robot node state machine state: ", robot.currentNode.name);
             telemetry.addLine("Nope");
             telemetry.addData("Feeder node state machine state: ", robot.getFeederStateName());
             telemetry.addData("Totem detected: ", robot.totemDetected());

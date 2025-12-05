@@ -26,24 +26,24 @@ public class DualMPCRServo {
     }
 
     public void setTarget(double targetAngle) {
-        this.targetAngle = normalizeAngle(targetAngle);
+       // this.targetAngle = normalizeAngle(targetAngle);
     }
 
-    public void update() {
+   /* public void update() {
         double currentAngle = getEncoderAngle();
-        double error = normalizeAngle(targetAngle - currentAngle);
-        double power = pid.update(currentAngle + error, currentAngle, kp, ki, kd, f);
-        power = clamp(power, -1, 1);
+        //double error = normalizeAngle(targetAngle - currentAngle);
+        //double power = pid.update(currentAngle + error, currentAngle, kp, ki, kd, f);
+        //power = clamp(power, -1, 1);
 
         servoA.setPower(power);
         servoB.setPower(servoBReversed ? -power : power);
-    }
+    }*/
 
-    private double normalizeAngle(double angle) {
+   /* private double normalizeAngle(double angle) {
         while (angle >= 180.0) angle -= 360.0;
         while (angle < -180.0) angle += 360.0;
         return angle;
-    }
+    }*/
 
     private double clamp(double value, double min, double max) {
         return Math.max(min, Math.min(max, value));

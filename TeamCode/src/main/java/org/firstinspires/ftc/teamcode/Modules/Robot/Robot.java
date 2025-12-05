@@ -39,7 +39,7 @@ public class Robot {
 
     public Robot (HardwareMap hardwareMap, boolean isRedAliance)
     {
-        turretController = new TurretController(hardwareMap);
+        turretController = new TurretController(hardwareMap, isRedAliance);
         flywheel = new Flywheel(hardwareMap);
         hood = new Hood(hardwareMap);
         limelight = new Limelight(hardwareMap, 7);
@@ -49,18 +49,18 @@ public class Robot {
 
         //sensor = hardwareMap.get(ColorSensor.class, "sensor");
 
-        detectPattern = new Node("detectPattern");
-        searchTowerTag = new Node("searchTowerTag");
-        towerTagDetected = new Node("towerTagDetected");
+        //detectPattern = new Node("detectPattern");
+        //searchTowerTag = new Node("searchTowerTag");
+        //towerTagDetected = new Node("towerTagDetected");
         shoot = new Node("shoot");
 
         currentNode = detectPattern;
 
         this.isRedAliance = isRedAliance;
 
-        detectPattern.addConditions(
+        /*detectPattern.addConditions(
                 () -> {
-                    limelight.update();
+                    //limelight.update();
                 }
                 ,
                 () -> {
@@ -107,7 +107,7 @@ public class Robot {
                 }
                 ,
                 new Node[]{searchTowerTag}
-        );
+        );*/
     }
 
     /*public enum State {
@@ -117,13 +117,14 @@ public class Robot {
     }*/
 
     public void update() {
-        currentNode.run();
+        /*currentNode.run();
         if (currentNode.transition()) {
             currentNode = currentNode.next[0];
-        }
+        }*/
+
     }
 
-    public void startTurret() {currentNode = detectPattern;}
+    /*public void startTurret() {currentNode = detectPattern;}
     public void funcLoadArtifact() {
             if (patternId == limelight.gppPattern())
                 if ((gppOrder[orderIndex] == index.green && index.fastestShiftGreen() > 0) && feeder.isStopped())
@@ -143,7 +144,7 @@ public class Robot {
 
             orderIndex++;
             if (orderIndex > 2) orderIndex = 0;
-    }
+    }*/
 
     public void shoot() {
         if ((currentNode == towerTagDetected && flywheel.checkVelocity()) && (index.fastestShiftPurple() == 0 || index.fastestShiftGreen() == 0)) {
@@ -174,7 +175,7 @@ public class Robot {
         index.artifactPurpleIn();
     }
     public void checkRunIntake() {if (index.emptySlots()) intake.activateIntake(); else if (index.fullSlots()) intake.stopIntake();}
-    public void loadArtifact() {if (!index.emptySlots()) funcLoadArtifact();}
+   // public void loadArtifact() {if (!index.emptySlots()) funcLoadArtifact();}
 
     public void noSensorLoadPurple() {index.loadPurple();}
     public void noSensorLoadGreen() {index.loadGreen();}
@@ -185,10 +186,10 @@ public class Robot {
     public void stopFeeder() {feeder.stopFeeder();}
     public String getFeederStateName() {return feeder.currentNode.name;}
     public void setFeederTestPosition() {feeder.setTestPosition();}
-    public boolean totemDetected() {return (limelight.patternCheck() == 1);}
+    public boolean totemDetected() {return limelight.patternCheck();}
     public int getFiducialId() {return limelight.getFiducialId();}
     public double getXll() {return limelight.X;}
-    public double getTurretAngle() {return turretController.getCurrentAngle();}
+    public double getTurretAngle() {return turretController.getEncoderAngle();}
     public double getTurretTargetAngle() {return turretController.getEffectiveTargetAngle();}
 
     public int getCurrentIndexTarget() {return index.getCurrentIndexTarget();}
@@ -208,7 +209,7 @@ public class Robot {
         feeder.update();
         update();
         checkRunIntake();
-        loadArtifact();
+        //loadArtifact();
         index.update();
         turretController.update();
     }

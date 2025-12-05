@@ -84,12 +84,12 @@ public class Limelight {
     public static boolean isRedAlliance() {return (fiducialId == redAllianceId);}
     public static boolean isBlueAlliance() {return (fiducialId == blueAllianceId);}
 
-    public int patternCheck() {
+    public boolean patternCheck() {
         if (getFiducialId() == patternGPPId ||
             getFiducialId() == patternPGPId ||
             getFiducialId() == patternPPGId)
-            return 1;
-        return 0;
+            return true;
+        return false;
     }
     public int ppgPattern() {return patternPPGId;};
     public int pgpPattern() {return patternPGPId;};
