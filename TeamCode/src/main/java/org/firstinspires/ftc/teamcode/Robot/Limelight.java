@@ -30,6 +30,7 @@ public class Limelight {
 
     public static double X;
     public static double Y;
+    public static double TA;
     public static int fiducialId;
 
     //TODO: Set alliance fiducial tower ids !!!
@@ -53,6 +54,7 @@ public class Limelight {
         LLResultTypes.FiducialResult fr = fiducials.get(0);
         X = fr.getTargetXDegrees();
         Y = fr.getTargetYDegrees();
+        TA = latest.getTa();
         fiducialId = fr.getFiducialId();
     }
 
@@ -62,6 +64,8 @@ public class Limelight {
     }
 
     public double getX() {return X;}
+
+    public double getTA() {return TA;}
     public int getFiducialId() {return fiducialId;}
 
     public double fiducialDistance() {

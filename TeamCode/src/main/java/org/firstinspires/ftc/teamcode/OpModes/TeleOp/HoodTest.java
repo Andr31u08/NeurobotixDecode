@@ -26,8 +26,10 @@ public class HoodTest extends LinearOpMode {
             angle = hood.calculateAngle(distance);
             hood.setServoPos(angle, servo);
             telemetry.addData("distance: ", distance);
-            telemetry.addData("angle: ", angle);
+            telemetry.addData("angle: ", Math.toDegrees(angle));
             telemetry.addData("latest: ", limelight.getFiducialId());
+            telemetry.addData("X= ", limelight.getX());
+            telemetry.addData("Y= ", limelight.getY());
             telemetry.update();
             limelight.update();
         }

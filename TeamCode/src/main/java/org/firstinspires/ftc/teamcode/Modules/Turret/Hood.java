@@ -13,10 +13,11 @@ public class Hood {
     private final Limelight limelight;
     private static double startPos = 0;
     public double angle, servoPosition, n;
-    public double speed = 0.1 * Flywheel.getTargetVelocity();
+    //public double speed = 0.1 * Flywheel.getTargetVelocity();
+    public double speed = 6; //TODO: sa mor eu (trb pus targetvelocity bun aici)
     public boolean isAchievable;
-    public final double MAX_ANGLE = 45;
     public final double PI = 3.1415926;
+    public final double MAX_ANGLE = PI/4;
     public final double CIRCLE_FRACTION = MAX_ANGLE/360;
 
     //TODO: derive the ecuation for the hood movement !!!
@@ -29,10 +30,10 @@ public class Hood {
     }
     public double calculateAngle(double distance)
     {
-        angle = Math.asin((distance*9.81)/(speed*speed)) * 90 / PI;
+        angle = Math.asin((distance*9.81)/(speed*speed));
         if(angle < 0)
             n++;
-        angle = n/2 * PI - angle;
+        angle = n/2 * PI + angle;
         if (angle > MAX_ANGLE)
             isAchievable = false;
         else
@@ -54,15 +55,15 @@ public class Hood {
             X = limelight.getX();
             if (X == 0)
                 X+=0.1;
-            distance = (1-0.315) / Math.tan(PI/2 + Math.toRadians(X));
-            return distance;
+            distance = (0.75-0.315) / Math.tan(PI/11.5 + Math.toRadians(X));
+            return 2*distance;
         }
         else
             return 0;
     }
+
     public Servo getServo() {return hoodServo;}
     public void updatePosition()
     {
-
     }
 }
