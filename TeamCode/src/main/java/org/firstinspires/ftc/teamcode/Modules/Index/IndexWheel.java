@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Modules.Index;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -24,7 +25,7 @@ public class IndexWheel {
     //private int posOffset = 100; // Set offset between actual positions
     public static int currPosition;
 
-    public static int nlPos1 = 0, nlPos2 = 67, nlPos3 = 140, lPos1 = 35, lPos2 = 105, lPos3 = 170;
+    public static int nlPos1 = 0, nlPos2 = 67, nlPos3 = 140, lPos1 = 105, lPos2 = 170, lPos3 = 35;
 
     private final int[] slots = {0, 0, 0};
 
@@ -49,6 +50,7 @@ public class IndexWheel {
     {
         dashboard = FtcDashboard.getInstance();
         index = hardwareMap.get(DcMotorEx.class, "index");
+        index.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         index.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         //index.setPidCoefficients(0.5, 0 , 0);
         sensor = new Sensor(hardwareMap);
@@ -94,12 +96,14 @@ public class IndexWheel {
         boolean hasGreen = false;
         for (int i = 0; i < 3; i++)
             if (slots[i] == green) {hasGreen = true;break;}
-        if (hasGreen)
-            while (slots[imIndexer] != green) {imIndexer++;if (imIndexer > 2) imIndexer = 0;}
+        if (hasGreen) {
+            //while (slots[imIndexer] != green) {imIndexer++;if (imIndexer > 2) imIndexer = 0;}
+            if (slots[imIndexer] == green) return imIndexer;
+            if (imIndexer == 2) return slots[imIndexer-1] == green ? 1 : 0;
+            else if (imIndexer == 0) return slots[imIndexer+1] == green ? 1 : 2;
+            else return slots[0] == green ? 0 : 2;
+        }
         else return 3;
-        int difSlots = slotIndexer - imIndexer;
-        if (difSlots == 2) return -1;
-        return difSlots;
     }
 
     public int fastestShiftPurple() {
@@ -107,12 +111,14 @@ public class IndexWheel {
         boolean hasPurple = false;
         for (int i = 0; i < 3; i++)
             if (slots[i] == purple) {hasPurple = true;break;}
-        if (hasPurple)
-            while (slots[imIndexer] != purple) {imIndexer++;if (imIndexer > 2) imIndexer = 0;}
+        if (hasPurple) {
+            //while (slots[imIndexer] != green) {imIndexer++;if (imIndexer > 2) imIndexer = 0;}
+            if (slots[imIndexer] == purple) return imIndexer;
+            if (imIndexer == 2) return slots[imIndexer-1] == purple ? 1 : 0;
+            else if (imIndexer == 0) return slots[imIndexer+1] == purple ? 1 : 2;
+            else return slots[0] == purple ? 0 : 2;
+        }
         else return 3;
-        int difSlots = slotIndexer - imIndexer;
-        if (difSlots == 2) return -1;
-        return difSlots;
     }
 
     public void loadTurretToggle() {
@@ -138,17 +144,16 @@ public class IndexWheel {
 
     public void loadPurple() {
         sSlots = fastestShiftPurple();
-        if (sSlots == 3) return;
+        if ((sSlots == 3) ||
+                (Math.abs(index.getCurrentPosition()-currPosition) > 3)) return;
 
-        positionIndexer += sSlots;
+        positionIndexer = sSlots;
         currPosition = currPositions[positionIndexer];
 
         //int posD = sSlots * posOffset;
         //index.setPosition(currPosition + posD);
         //currPosition += posD;
-
-        slotIndexer = (slotIndexer - sSlots) % 3;
-        if (slotIndexer < 0) slotIndexer += 3;
+        slotIndexer = sSlots;
         //index.update();
         //index.setPosition(currPosition);
         index.setTargetPosition(currPosition);
@@ -156,17 +161,16 @@ public class IndexWheel {
 
     public void loadGreen() {
         sSlots = fastestShiftGreen();
-        if (sSlots == 3) return;
+        if ((sSlots == 3) ||
+                (Math.abs(index.getCurrentPosition()-currPosition) > 3)) return;
 
-        positionIndexer += sSlots;
+        positionIndexer = sSlots;
         currPosition = currPositions[positionIndexer];
 
         //int posD = sSlots * posOffset;
         //index.setPosition(currPosition + posD);
         //currPosition += posD;
-
-        slotIndexer = (slotIndexer - sSlots) % 3;
-        if (slotIndexer < 0) slotIndexer += 3;
+        slotIndexer = sSlots;
         //index.update();
         //index.setPosition(currPosition);
         index.setTargetPosition(currPosition);

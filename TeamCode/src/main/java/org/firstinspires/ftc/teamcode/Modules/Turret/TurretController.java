@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Modules.Turret;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.Math.PID;
@@ -10,9 +11,8 @@ import org.firstinspires.ftc.teamcode.Robot.Limelight;
 
 public class TurretController {
 
-    private final CRServo turretServo1;
-    private final CRServo turretServo2;
-    private final DcMotorEx turretEncoder;
+    private final DcMotorEx turretMotor;
+    //private final DcMotorEx turretEncoder;
     private final PID controller;
     private final Limelight limelight;
     //private final DualMPCRServo turretController;
@@ -21,8 +21,8 @@ public class TurretController {
 
     public static double kp = 0.07, ki = 0, kd = 0.01, f = 0.01;
     private double ticksPerRev = 8192.0;
-    private int nr_teeth_enc_gear = 16;
-    private int nr_teeth_turret_gear = 67;
+    private double nr_teeth_enc_gear = 6;
+    private double nr_teeth_turret_gear = 23.5;
 
     private double followingPivotPose = 0;
 
@@ -30,16 +30,17 @@ public class TurretController {
     private boolean redAllTrue;
 
     public TurretController(HardwareMap hardwareMap, boolean redAllTrue) {
-        turretServo1 = hardwareMap.get(CRServo.class, "turretServo1");
-        turretEncoder = hardwareMap.get(DcMotorEx.class, "backLeft");
-        turretServo2 = hardwareMap.get(CRServo.class, "turretServo2");
+        //turretServo1 = hardwareMap.get(CRServo.class, "turretServo1");
+        //turretEncoder = hardwareMap.get(DcMotorEx.class, "backLeft");
+        //turretServo2 = hardwareMap.get(CRServo.class, "turretServo2");
+        turretMotor = hardwareMap.get(DcMotorEx.class, "turretMotor");
 
-        turretEncoder.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        turretEncoder.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        //turretEncoder.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        turretMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         this.redAllTrue = redAllTrue;
 
-        limelight = new Limelight(hardwareMap, 0);
+        limelight = new Limelight(hardwareMap, 7);
         controller = new PID(kp, ki, kd, 0);
         //turretController = new DualMPCRServo(turretServo1, turretEncoder, turretServo2, pidController, false);
     }
@@ -92,8 +93,7 @@ public class TurretController {
         //limitTarget();
         double currpos = getEncoderAngle();
         double value = controller.update(effectiveTargetAngle, currpos, kp, ki, kd, 0);
-        turretServo1.setPower(value);
-        turretServo2.setPower(value);
+        turretMotor.setPower(value);
 
     }
 
@@ -120,10 +120,10 @@ public class TurretController {
     }*/
 
     public double getEncoderAngle() {
-        return turretEncoder.getCurrentPosition() * (360.0 / ticksPerRev) * ((double)nr_teeth_enc_gear/nr_teeth_turret_gear);
+        return turretMotor.getCurrentPosition() * (360.0 / ticksPerRev) * ((double)nr_teeth_enc_gear/nr_teeth_turret_gear);
     }
 
     public double encoderPosition() {
-        return turretEncoder.getCurrentPosition();
+        return turretMotor.getCurrentPosition();
     }
 }

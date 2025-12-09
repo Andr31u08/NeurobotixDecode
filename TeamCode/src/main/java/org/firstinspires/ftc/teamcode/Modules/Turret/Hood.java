@@ -26,8 +26,8 @@ public class Hood {
 
     public Hood (HardwareMap hardwareMap)
     {
-        hoodServo = hardwareMap.get(Servo.class, "HoodServo");
-        hood = new BetterServo("HoodServo", hoodServo, BetterServo.RunMode.PROFILE, startPos, false);
+        hoodServo = hardwareMap.get(Servo.class, "hood");
+        hood = new BetterServo("hood", hoodServo, BetterServo.RunMode.PROFILE, startPos, false);
         limelight = new Limelight(hardwareMap, 0);
     }
 

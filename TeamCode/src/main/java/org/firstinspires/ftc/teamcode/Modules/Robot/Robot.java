@@ -202,6 +202,7 @@ public class Robot {
     public double BlueAmount() {return index.BlueAmount();}
     //public double getEncoderPosition() {return turretController.getEcoderPosition();}
     public boolean areSlotsFull() {return index.areSlotsFull();}
+    public double getYll() {return limelight.Y;}
 
     //public int testRed() {return sensor.green();}
 

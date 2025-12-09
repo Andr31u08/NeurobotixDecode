@@ -3,8 +3,10 @@ package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Modules.Drive.MecanumDriveTrain;
+import org.firstinspires.ftc.teamcode.Modules.Index.Feeder;
 import org.firstinspires.ftc.teamcode.Modules.Index.IndexWheel;
 import org.firstinspires.ftc.teamcode.Modules.Index.Intake;
 import org.firstinspires.ftc.teamcode.Modules.Robot.Robot;
@@ -22,12 +24,13 @@ public class TestTeleOpDecode extends LinearOpMode {
         Intake intake = new Intake(hardwareMap);
         GamepadWrapper gamepad = new GamepadWrapper(gamepad1);
         MecanumDriveTrain driveTrain = new MecanumDriveTrain(MecanumDriveTrain.State.DRIVE, hardwareMap);
-
-
+        Feeder feeder = new Feeder(hardwareMap);
+        //feeder.shoot(gamepad1);
         waitForStart();
         while (opModeIsActive()) {
             gamepad.update(gamepad1);
             robot.robotUpdate();
+
             double X = gamepad1.left_stick_x * gamepad1.left_stick_x * Math.signum(gamepad1.left_stick_x);
             double Y = gamepad1.left_stick_y * gamepad1.left_stick_y * -Math.signum(gamepad1.left_stick_y);
             double rotation = gamepad1.right_trigger - gamepad1.left_trigger;
@@ -53,11 +56,14 @@ public class TestTeleOpDecode extends LinearOpMode {
                 robot.setFeederTestPosition();
 
             //telemetry.addData("Robot node state machine state: ", robot.currentNode.name);
+            telemetry.addData("Current angle: ", robot.getTurretAngle());
+            telemetry.addData("Target angle: ", robot.getTurretTargetAngle());
             telemetry.addLine("Nope");
             telemetry.addData("Feeder node state machine state: ", robot.getFeederStateName());
             telemetry.addData("Totem detected: ", robot.totemDetected());
             telemetry.addData("FiducialID: ", robot.getFiducialId());
             telemetry.addData("Limelight x: ", robot.getXll());
+            telemetry.addData("Limelight y: ",robot.getYll());
             telemetry.addData("Turret angle: ", robot.getTurretAngle());
             telemetry.addData("Turret target angle: ", robot.getTurretTargetAngle());
             telemetry.addData("Index current target position: ", robot.getCurrentIndexTarget());

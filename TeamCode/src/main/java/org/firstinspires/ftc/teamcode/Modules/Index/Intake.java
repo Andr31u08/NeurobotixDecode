@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Modules.Index;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -8,30 +9,40 @@ import org.firstinspires.ftc.teamcode.Wrappers.BetterMotor;
 
 public class Intake {
 
-    private final DcMotorEx intakeMotor;
-    private final BetterMotor intake;
+    //private final DcMotorEx intakeMotor;
+    //private final BetterMotor intake;
+    private final CRServo intakeServo1;
+    private final CRServo intakeServo2;
     private double power = 0;
 
     public Intake (HardwareMap hardwareMap)
     {
-        intakeMotor = hardwareMap.get(DcMotorEx.class, "intake");
-        intakeMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-        intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        intakeMotor.setDirection(DcMotorEx.Direction.FORWARD);
+        //intakeMotor = hardwareMap.get(DcMotorEx.class, "intake");
+        //intakeMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        //intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        //intakeMotor.setDirection(DcMotorEx.Direction.FORWARD);
+        intakeServo1 = hardwareMap.get(CRServo.class, "intakeServo1");
+        intakeServo2 = hardwareMap.get(CRServo.class, "intakeServo2");
 
-        intake = new BetterMotor(intakeMotor, BetterMotor.RunMode.RUN, false);
+        //intake = new BetterMotor(intakeMotor, BetterMotor.RunMode.RUN, false);
     }
 
     public void activateIntake() {
-        intake.setPower(power);
+        //intake.setPower(power);
+        intakeServo1.setPower(power);
+        intakeServo2.setPower(power);
     }
 
     public void stopIntake() {
-        intake.setPower(0);
+        //intake.setPower(0);
+        intakeServo1.setPower(0);
+        intakeServo2.setPower(0);
     }
 
     public void reverseIntake() {
-        intake.setPower(-power);
+        //intake.setPower(-power);
+        intakeServo1.setPower(-power);
+        intakeServo2.setPower(-power);
     }
 
     public void setIntakePower(double value) {
